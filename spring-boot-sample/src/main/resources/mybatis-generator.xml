@@ -44,9 +44,9 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="t_pay_order" enableSelectByExample="false"
+        <table tableName="t_account_seq" enableSelectByExample="false"
                enableDeleteByExample="false" enableCountByExample="false"
-               enableUpdateByExample="false" domainObjectName="PayOrder">
+               enableUpdateByExample="false" domainObjectName="AccountSeq">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
     </context>

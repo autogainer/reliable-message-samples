@@ -13,18 +13,18 @@ import java.math.BigDecimal;
  * <p>Title:</p>
  * <p>Description:</p>
  *
- * @author Chen Nan
- * @date 2019/3/31.
+ * @author xul
+ * @date 2020/3/16.
  */
 @ApiModel
 @Data
-public class RechargeDto implements Serializable {
-    @ApiModelProperty(value = "充值账户ID", required = true)
+public class AccSeqDto implements Serializable {
+    @ApiModelProperty(value = "账户ID", required = true)
     @NotNull
     @Min(1)
-    private Integer accountId;
+    private Integer accId;
 
-    @ApiModelProperty(value = "充值金额", required = true)
+    @ApiModelProperty(value = "记账金额", required = true)
     @NotNull
     @Min(1)
     private BigDecimal money;

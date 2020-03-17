@@ -9,7 +9,7 @@ mybatis:
 spring:
   # 数据库连接配置
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/reliable-message-sample?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/reliable-message-sample?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -17,7 +17,7 @@ spring:
       connection-test-query: SELECT 1
   # ActiveMQ配置
   activemq:
-    broker-url: tcp://127.0.0.1:61616
+    broker-url: tcp://192.168.1.111:61616
     user: admin
     password: admin
 
@@ -27,7 +27,7 @@ dubbo:
     name: spring-boot-sample
     logger: slf4j
   registry:
-    address: zookeeper://127.0.0.1:2181
+    address: zookeeper://192.168.1.8:2181
   protocol:
     name: dubbo
     port: 20882

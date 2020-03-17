@@ -1,8 +1,8 @@
 package com.cn.rmq.sample.controller;
 
+import com.cn.rmq.sample.model.dto.AccSeqDto;
 import com.cn.rmq.sample.model.dto.BaseRsp;
-import com.cn.rmq.sample.model.dto.RechargeDto;
-import com.cn.rmq.sample.service.IRechargeOrderService;
+import com.cn.rmq.sample.service.IAccountSeqService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,24 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * @author Chen Nan
+ * @author autogainer
  */
 @RestController
-@Api(tags = "创建充值订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-@RequestMapping(value = "/recharge")
+@Api(tags = "创建记账单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/creataccseq")
 @Slf4j
-public class RechargeController {
+public class AccController {
 
     @Reference
-    private IRechargeOrderService rechargeOrderService;
+    private IAccountSeqService iAccountSeqService;
 
-
-    @ApiOperation("创建充值订单，同时生成支付单")
+    @ApiOperation("创建单笔记账流水")
     @PostMapping
-    public Object add(@ModelAttribute @Valid RechargeDto req) {
+    public Object add(@ModelAttribute @Valid AccSeqDto req) {
         BaseRsp rsp = new BaseRsp();
-        Integer payOrderId = rechargeOrderService.createRechargeOrder(req);
-        rsp.setData(payOrderId);
+        iAccountSeqService.creataccSeq(req);
         return rsp;
     }
 }
