@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @author autogainer
  */
 @RestController
-@Api(tags = "创建记账单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(tags = "自测试创建记账单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @RequestMapping(value = "/creataccseq")
 @Slf4j
 public class AccController {

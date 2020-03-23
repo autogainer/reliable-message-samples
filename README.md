@@ -106,17 +106,78 @@ dubbo:
 ```
 访问地址： http://127.0.0.1:10010/swagger-ui.html
 ```
-
+###调用过程
 #### 生成订单
-调用接口成功后将生成待支付的充值订单与支付订单。接口响应数据data为订单ID，用于下一步模拟支付成功回调。
-![生成订单](https://www.showdoc.cc/server/api/common/visitfile/sign/dc4ca3b42f64b83021759835fd30beec?showdoc=.jpg "生成充值订单")
+调用接口成功后将生成待支付的充值订单与支付订单，并发送预发送请求。接口响应数据data为订单ID，消息服务ID，为了方便，用于下一步模拟支付成功回调。
+![生成订单及应答](https://github.com/autogainer/reliable-message-samples/blob/dev/Image/%E4%B8%8A%E6%B8%B8%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90.png)
 
-![生成订单响应](https://www.showdoc.cc/server/api/common/visitfile/sign/9025e2f453b387df842988bbc425fab2?showdoc=.jpg)
 
-#### 支付回调
+
+#### 支付结果回调
 模拟银行支付成功回调，成功调用接口后可查看数据库数据，充值订单、支付订单状态改变成已支付，账户金额已增加。
-![支付成功回调](https://www.showdoc.cc/server/api/common/visitfile/sign/f3daf005a81e3065ff1efb1b91449901?showdoc=.jpg "支付成功回调")
+![支付成功回调及应答](https://github.com/autogainer/reliable-message-samples/blob/dev/Image/%E5%88%9B%E5%BB%BA%E5%85%85%E5%80%BC%E8%AE%A2%E5%8D%95.png)
 
-![支付回调接口响应](https://www.showdoc.cc/server/api/common/visitfile/sign/0d888eaa8937726cddea3919291903a3?showdoc=.jpg "支付回调接口响应")
+# 基本功能接入指引
+## 上层业务系统实现接口清单
+```java
+   /**
+     * 创建预发送消息
+     *
+     * @param consumerQueue 消费队列
+     * @param messageBody   消息内容
+     * @return 消息ID
+     */
+    String createPreMessage(String consumerQueue, String messageBody);
+```
+```java
+    /**
+     * 确认发送消息(异步实现)
+     *
+     * @param messageId 消息 ID
+     */
+    void confirmAndSendMessage(String messageId);
 
+```
+```java
+    /**
+     * 根据消息ID删除消息（异步实现，用于取消发送）
+     * @param messageId 消息ID
+     */
+    void deleteMessageById(String messageId);
 
+```
+```java
+    /**
+     * 本接口提供给RMQ消息确认子系统，确认业务是否处理正常，是否发送消息
+     * @param req 支付订单信息
+     * @return 业务处理结果 data 1成功 0失败
+     * 数据格式  {"code":0,"msg":"SUCCESS","data":1}
+     */
+    @ApiOperation("消息确认子系统-确认是否发送消息")
+    @PostMapping("check")
+    public Object check(@RequestBody @Valid PayOrder req) {
+        BaseRsp rsp = new BaseRsp();
+        int result = payOrderService.check(req);
+        rsp.setData(result);
+        return rsp;
+    }
+```
+## 下层业务系统实现接口清单
+```java
+    /**
+     * 监听MQ队列处理消息
+     *
+     * @param msg 消息内容
+     */
+    推荐使用Java消息服务 JMS模式
+    @JmsListener(destination = Constants.QUEUE_PAY)
+    public void handleMsg(RmqMessage msg);
+```
+```java
+    /**
+     * 根据消息ID删除消息（用于确认消费）
+     * @param messageId 消息ID
+     */
+    void deleteMessageById(String messageId);
+
+```
