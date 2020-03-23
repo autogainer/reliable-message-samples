@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.6.21 : Database - reliable-message-sample
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -73,3 +74,15 @@ insert  into `t_recharge_order`(`id`,`account_id`,`pay_order_id`,`money`,`status
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+CREATE TABLE `reliable-message-sample`.t_account_seq (
+	id int(32) auto_increment NOT NULL COMMENT '流水id',
+	acc_id int(11) NOT NULL COMMENT '账户id',
+	money decimal(10,2) NULL COMMENT '账户余额',
+	create_time datetime NULL COMMENT '创建时间',
+	update_time datetime NULL COMMENT '更新时间',
+	CONSTRAINT `PRIMARY` PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci
+COMMENT='';
