@@ -30,6 +30,12 @@ public class AccountSeq {
     private Integer accId;
 
     /**
+     * 业务流水号
+     */
+    @Column(name = "biz_no")
+    private Integer bizNo;
+
+    /**
      * 账户余额
      */
     private BigDecimal money;

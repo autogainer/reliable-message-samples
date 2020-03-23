@@ -28,4 +28,9 @@ public class AccSeqDto implements Serializable {
     @NotNull
     @Min(1)
     private BigDecimal money;
+
+    @ApiModelProperty(value = "业务流水号", required = true)
+    @NotNull
+    @Min(1)
+    private Integer bizNo;
 }

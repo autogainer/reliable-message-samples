@@ -1,7 +1,10 @@
 package com.cn.rmq.sample.service.impl;
 
+import cn.hutool.json.JSONUtil;
+import com.cn.rmq.api.service.IRmqService;
 import com.cn.rmq.sample.mapper.RechargeOrderMapper;
 import com.cn.rmq.sample.model.Constants;
+import com.cn.rmq.sample.model.dto.AccSeqDto;
 import com.cn.rmq.sample.model.dto.RechargeDto;
 import com.cn.rmq.sample.model.po.Account;
 import com.cn.rmq.sample.model.po.PayOrder;
@@ -34,9 +37,12 @@ public class RechargeOrderServiceImpl extends BaseServiceImpl<RechargeOrderMappe
     @Reference
     private IAccountService accountService;
 
+    @Reference
+    private IRmqService iRmqService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer createRechargeOrder(RechargeDto req) {
+    public String createRechargeOrder(RechargeDto req) {
         log.info("【createRecharge】start:{}", req);
         Date now = new Date();
 
@@ -56,7 +62,17 @@ public class RechargeOrderServiceImpl extends BaseServiceImpl<RechargeOrderMappe
         payOrderService.insertSelective(payOrder);
 
         log.info("【createRecharge】success, payOrder={}", payOrder);
-        return payOrder.getId();
+
+        AccSeqDto reqAcc= new AccSeqDto();
+        BeanUtils.copyProperties(req, reqAcc);
+
+        reqAcc.setBizNo(payOrder.getId());
+        reqAcc.setAccId(req.getAccountId());
+        //预发送记账信息
+        String messageId = iRmqService.createPreMessage(Constants.QUEUE_PAY, JSONUtil.toJsonStr(reqAcc));
+
+        String str = "{\"payOderId\":"+payOrder.getId()+",\"messageId\":"+messageId+"}";
+        return str;
     }
 
     @Override
@@ -99,6 +115,6 @@ public class RechargeOrderServiceImpl extends BaseServiceImpl<RechargeOrderMappe
         Account updateAccount = new Account();
         updateAccount.setId(rechargeOrder.getAccountId());
         updateAccount.setMoney(payOrder.getMoney());
-        accountService.changeMoney(updateAccount);
+       // accountService.changeMoney(updateAccount);
     }
 }

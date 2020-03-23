@@ -7,6 +7,7 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="acc_id" jdbcType="INTEGER" property="accId" />
+    <result column="biz_no" jdbcType="INTEGER" property="bizNo" />
     <result column="money" jdbcType="DECIMAL" property="money" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -15,6 +16,6 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, acc_id, money, create_time, update_time
+    id, acc_id, biz_no, money, create_time, update_time
   </sql>
 </mapper>

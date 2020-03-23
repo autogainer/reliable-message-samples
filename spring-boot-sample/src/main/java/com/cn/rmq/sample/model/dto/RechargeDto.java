@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @ApiModel
 @Data
 public class RechargeDto implements Serializable {
-    @ApiModelProperty(value = "充值账户ID", required = true)
+    @ApiModelProperty(value = "商户ID", required = true)
     @NotNull
     @Min(1)
     private Integer accountId;

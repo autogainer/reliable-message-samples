@@ -15,11 +15,14 @@ public interface IRechargeOrderService extends IBaseService<RechargeOrder, Integ
      * @param req 充值账户与金额
      * @return 支付订单ID
      */
-    Integer createRechargeOrder(RechargeDto req);
+    String createRechargeOrder(RechargeDto req);
+
 
     /**
      * 充值成功业务处理
      * @param payOrder 支付订单信息
      */
     void rechargeSuccess(PayOrder payOrder);
+
+
 }

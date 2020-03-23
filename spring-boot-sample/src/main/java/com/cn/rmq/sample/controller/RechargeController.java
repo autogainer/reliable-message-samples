@@ -1,5 +1,6 @@
 package com.cn.rmq.sample.controller;
 
+import cn.hutool.json.JSONObject;
 import com.cn.rmq.sample.model.dto.BaseRsp;
 import com.cn.rmq.sample.model.dto.RechargeDto;
 import com.cn.rmq.sample.service.IRechargeOrderService;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
  * @author Chen Nan
  */
 @RestController
-@Api(tags = "创建充值订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(tags = "发起充值业务", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @RequestMapping(value = "/recharge")
 @Slf4j
 public class RechargeController {
@@ -28,12 +29,13 @@ public class RechargeController {
     private IRechargeOrderService rechargeOrderService;
 
 
-    @ApiOperation("创建充值订单，同时生成支付单")
+    @ApiOperation("创建充值订单入库，同时生成支付单入库，发送预发送记账报文")
     @PostMapping
     public Object add(@ModelAttribute @Valid RechargeDto req) {
         BaseRsp rsp = new BaseRsp();
-        Integer payOrderId = rechargeOrderService.createRechargeOrder(req);
-        rsp.setData(payOrderId);
+        String MsgAttr = rechargeOrderService.createRechargeOrder(req);
+        JSONObject json = new JSONObject(MsgAttr);
+        rsp.setData(json);
         return rsp;
     }
 }

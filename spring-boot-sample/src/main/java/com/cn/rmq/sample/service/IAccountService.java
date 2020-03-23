@@ -1,5 +1,6 @@
 package com.cn.rmq.sample.service;
 
+import com.cn.rmq.sample.model.dto.AccSeqDto;
 import com.cn.rmq.sample.model.po.Account;
 
 /**
@@ -10,7 +11,7 @@ import com.cn.rmq.sample.model.po.Account;
 public interface IAccountService extends IBaseService<Account, Integer> {
     /**
      * 修改账户金额
-     * @param account 账户信息
+     * @param accSeqDto 账户信息
      */
-    void changeMoney(Account account);
+    void changeMoney(AccSeqDto accSeqDto);
 }

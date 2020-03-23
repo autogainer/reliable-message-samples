@@ -2,10 +2,8 @@ package com.cn.rmq.sample.controller;
 
 import com.cn.rmq.sample.model.dto.BaseRsp;
 import com.cn.rmq.sample.model.dto.PayDto;
-import com.cn.rmq.sample.model.dto.RechargeDto;
 import com.cn.rmq.sample.model.po.PayOrder;
 import com.cn.rmq.sample.service.IPayOrderService;
-import com.cn.rmq.sample.service.IRechargeOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,15 +26,15 @@ public class PayController {
     private IPayOrderService payOrderService;
 
     /**
-     * 模拟银行支付回调
+     * 模拟银行支付结果回调
      * @param req 订单ID
      * @return 业务处理结果
      */
-    @ApiOperation("模拟银行支付回调")
-    @PostMapping("success")
+    @ApiOperation("模拟银行支付结果回调")
+    @PostMapping("payResult")
     public Object add(@ModelAttribute @Valid PayDto req) {
         BaseRsp rsp = new BaseRsp();
-        payOrderService.paySuccess(req);
+        payOrderService.payResultProcess(req);
         return rsp;
     }
 

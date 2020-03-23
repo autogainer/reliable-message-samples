@@ -65,6 +65,49 @@ public class PayOrderServiceImpl extends BaseServiceImpl<PayOrderMapper, PayOrde
     }
 
     @Override
+    public void payResultProcess(PayDto req) {
+        log.info("【payResultProcess】start:", req);
+        PayOrder payOrder = mapper.selectByPrimaryKey(req.getPayOrderId());
+        if (payOrder == null) {
+            throw new RuntimeException("支付订单不存在");
+        }
+
+        if (payOrder.getStatus() == 1) {
+            log.info("【payResultProcess】该订单已支付, payOrder={}", payOrder);
+            return;
+        }
+
+        if (payOrder.getStatus() != 0) {
+            log.info("【payResultProcess】订单状态为终态，不做任何操作, payOrder={}", payOrder);
+            return;
+        }
+
+
+        if (req.isPayResult()){//支付成功
+            // 修改订单状态
+            payOrder = new PayOrder();
+            payOrder.setStatus((byte) 1);
+            mapper.updateByPrimaryKeySelective(payOrder);
+
+            // 异步调用RMQ，确认发送消息
+            // 假如使用同步调用，RMQ确认消息成功，已经把MQ消息发送给下游子系统
+            // 但是由于网络波动或其他原因，此处抛出异常，使已经正常执行的业务回滚，如果业务复杂，就会造成数据不一致。
+            // 因此使用异步调用，忽略确认发送消息的异常。异常结果由消息确认子系统来处理。
+            RpcContext.getContext().asyncCall(() -> rmqService.confirmAndSendMessage(req.getMessageId()));
+        }else {
+            // 修改订单状态
+            payOrder = new PayOrder();
+            payOrder.setStatus((byte) 2);
+            mapper.updateByPrimaryKeySelective(payOrder);
+
+            // 异步调用RMQ，删除消息
+            RpcContext.getContext().asyncCall(() -> rmqService.deleteMessageById(req.getMessageId()));
+        }
+
+        log.info("【paySuccess】success, payOrderId={}, messageId={}", req.getPayOrderId(), req.getMessageId());
+    }
+
+    @Override
     public int check(PayOrder req) {
         log.info("【payCheck】start, PayOrderId={}", req.getId());
         PayOrder payOrder = mapper.selectByPrimaryKey(req.getId());

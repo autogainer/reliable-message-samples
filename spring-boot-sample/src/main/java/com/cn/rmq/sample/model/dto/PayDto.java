@@ -7,7 +7,6 @@ import lombok.Data;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * <p>Title:</p>
@@ -23,4 +22,12 @@ public class PayDto implements Serializable {
     @NotNull
     @Min(1)
     private Integer payOrderId;
+
+    @ApiModelProperty(value = "支付是否成功", required = true)
+    @NotNull
+    private boolean payResult;
+
+    @ApiModelProperty(value = "消息ID", required = true)
+    @NotNull
+    private String messageId;
 }

@@ -16,6 +16,12 @@ public interface IPayOrderService extends IBaseService<PayOrder, Integer> {
     void paySuccess(PayDto req);
 
     /**
+     * 支付结果处理
+     * @param req 支付订单ID/结果
+     */
+    void payResultProcess(PayDto req);
+
+    /**
      * 确认业务处理结果
      * @param req 支付订单信息
      * @return 是否成功 1是 0否

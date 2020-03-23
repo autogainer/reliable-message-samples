@@ -1,11 +1,15 @@
 package com.cn.rmq.sample.model.po;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -31,7 +35,7 @@ public class PayOrder {
     private BigDecimal money;
 
     /**
-     * 支付状态 0未支付 1已支付
+     * 支付状态 0未支付 1已支付  2 支付失败
      */
     private Byte status;
 
