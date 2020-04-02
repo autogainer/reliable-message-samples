@@ -14,7 +14,7 @@
     <dependencies>
         <!--rmq-->
         <dependency>
-            <groupId>com.gitee.nuliing</groupId>
+            <groupId>com.cn.rmq</groupId>
             <artifactId>rmq-api</artifactId>
         </dependency>
 
@@ -96,13 +96,6 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-
-        <!-- hot deployment -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

@@ -58,7 +58,7 @@
         <dependencies>
             <!--rmq-->
             <dependency>
-                <groupId>com.gitee.nuliing</groupId>
+                <groupId>com.cn.rmq</groupId>
                 <artifactId>rmq-api</artifactId>
                 <version>1.0.1</version>
             </dependency>
@@ -181,8 +181,52 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <!-- REST support dependencies -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-netty4</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <profile>

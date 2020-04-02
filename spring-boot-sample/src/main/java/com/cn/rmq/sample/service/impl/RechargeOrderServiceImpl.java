@@ -17,6 +17,12 @@ import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import java.util.Date;
 
@@ -27,6 +33,7 @@ import java.util.Date;
  * @date 2019/3/31.
  */
 @Service(timeout = Constants.SERVICE_TIMEOUT)
+@Path("recharge")
 @Slf4j
 public class RechargeOrderServiceImpl extends BaseServiceImpl<RechargeOrderMapper, RechargeOrder, Integer>
         implements IRechargeOrderService {
